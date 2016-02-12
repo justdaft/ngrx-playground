@@ -1,0 +1,11 @@
+{
+  "name": "ngrx-example",
+  "version": "1.0.0",
+  "description": "A simple plunker demonstrating Angular2 usage: - Uses SystemJS + TypeScript to compile on the fly - Includes binding, directives, http, pipes, and DI usage.",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
