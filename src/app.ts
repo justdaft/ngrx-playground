@@ -3,25 +3,26 @@ import {Component, ChangeDetectionStrategy} from 'angular2/core'
 import {Store} from '@ngrx/store'
 import {LogMonitor} from '@ngrx/devtools'
 
-import * as TodoActions from './todos';
+// import * as TileActions from './tiles';
+import * as TileActions from './tiles';
 
-import {NewTodoInput} from './components/newTodo';
-import {TodoList} from './components/todoList'
+import {NewTileInput} from './components/newTile';
+import {TileList} from './components/tileList'
 
 @Component({
-  selector: 'todo-app',
+  selector: 'tile-app',
   providers: [],
   template: `
     <div>
       <log-monitor></log-monitor>
-      <h2>Todos</h2>
-      <new-todo-input (create)="addTodo($event)"></new-todo-input>
+      <h2>Tiles</h2>
+      <new-tile-input (create)="addTile($event)"></new-tile-input>
       =========
-      <todo-list
-        [todos]="todos | async"
-        (complete)="completeTodo($event)"
-        (delete)="deleteTodo($event)"
-      ></todo-list>
+      <tile-list
+        [tiles]="tiles | async"
+        (complete)="completeTile($event)"
+        (delete)="deleteTile($event)"
+      ></tile-list>
       =========
       <div>
         <button (click)="show('ALL')">All</button>
@@ -30,37 +31,37 @@ import {TodoList} from './components/todoList'
       </div>
     </div>
   `,
-  directives: [LogMonitor, NewTodoInput, TodoList],
+  directives: [LogMonitor, NewTileInput, TileList],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
-  constructor(private store:Store) {
-    this.todos = store.select('todos')
-      .combineLatest(store.select('visibilityFilter'), (todos, visibilityFilter) => {
-        return todos.filter(visibilityFilter)
+  constructor(private store: Store) {
+    this.tiles = store.select('tiles')
+      .combineLatest(store.select('visibilityFilter'), (tiles, visibilityFilter) => {
+        return tiles.filter(visibilityFilter)
       });
   }
-  addTodo(newTodo){
+  addTile(newTile){
     this.store.dispatch({
-      type: TodoActions.ADD_TODO,
-      payload: newTodo
+      type: TileActions.ADD_TILE,
+      payload: newTile
     });
   }
-  completeTodo(todo){
+  completeTile(tile){
     this.store.dispatch({
-      type: TodoActions.COMPLETE_TODO,
-      payload: todo
+      type: TileActions.COMPLETE_TILE,
+      payload: tile
     });
   }
-  deleteTodo(todo){
+  deleteTile(tile){
     this.store.dispatch({
-      type: TodoActions.DELETE_TODO,
-      payload: todo
+      type: TileActions.DELETE_TILE,
+      payload: tile
     });
   }
   show(filter){
     this.store.dispatch({
-      type: TodoActions[filter]
+      type: TileActions[filter]
     });
   }
 }
